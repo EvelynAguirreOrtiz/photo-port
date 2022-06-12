@@ -1,24 +1,29 @@
 import React, { useState } from "react";
 
 function ContactForm() {
-	const { name, email, message } = formState;
 	const [formState, setFormState] = useState({
 		name: "",
 		email: "",
 		message: "",
 	});
 
+	const { name, email, message } = formState;
+
 	function handleChange(e) {
-		setFormState({ ...formState, name: e.target.value });
+		setFormState({ ...formState, [e.target.name]: e.target.value });
 	}
 
-	console.log(formState);
+	// console.log(formState);
 
+	function handleSubmit(e) {
+		e.preventDefault();
+		console.log(formState);
+	}
 	// JSX
 	return (
 		<section>
 			<h1>Contact me</h1>
-			<form id="contact-form">
+			<form id="contact-form" onSubmit={handleSubmit}>
 				<div>
 					<label htmlFor="name">Name:</label>
 					<input
@@ -30,11 +35,21 @@ function ContactForm() {
 				</div>
 				<div>
 					<label htmlFor="email">Email address:</label>
-					<input type="email" defaultValue={email} name="email" />
+					<input
+						type="email"
+						defaultValue={email}
+						name="email"
+						onChange={handleChange}
+					/>
 				</div>
 				<div>
 					<label htmlFor="message">Message:</label>
-					<textarea name="message" defaultValue={message} rows="5" />
+					<textarea
+						name="message"
+						defaultValue={message}
+						onChange={handleChange}
+						rows="5"
+					/>
 				</div>
 				<button type="submit">Submit</button>
 			</form>
